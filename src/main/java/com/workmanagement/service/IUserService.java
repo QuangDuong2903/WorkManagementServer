@@ -6,4 +6,5 @@ import com.workmanagement.dto.UserDTO;
 
 public interface IUserService {
 	ResponseEntity<UserDTO> save(UserDTO dto);
+	ResponseEntity<UserDTO> findGoogleUserByEmail(String email);
 }

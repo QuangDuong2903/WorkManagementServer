@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class UserEntity extends BaseEntity {
 
-	@Column(name = "username")
+	@Column(name = "username", unique = true)
 	private String userName;
 	
 	@Column(name = "password")
@@ -29,7 +29,7 @@ public class UserEntity extends BaseEntity {
 	@Column(name = "avatar")
 	private String avatar;
 	
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 	
 	@Column(name = "status")

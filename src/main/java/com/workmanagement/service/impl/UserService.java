@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.workmanagement.constant.SystemConstant;
 import com.workmanagement.converter.UserConverter;
 import com.workmanagement.dto.UserDTO;
 import com.workmanagement.entity.UserEntity;
@@ -28,6 +29,15 @@ public class UserService implements IUserService {
 		if (user != null)
 			return ResponseEntity.ok().body(userConverter.toDTO(user));
 		user = userRespository.save(userConverter.toEntity(dto));
+		return ResponseEntity.ok().body(userConverter.toDTO(user));
+	}
+
+	@Override
+	public ResponseEntity<UserDTO> findGoogleUserByEmail(String email) {
+		UserEntity user = userRespository.findOneByUserNameAndTypeAndStatus(email, SystemConstant.GOOGLE_ACCOUNT,
+				SystemConstant.ACTIVE_STATUS);
+		if (user == null)
+			return ResponseEntity.badRequest().body(new UserDTO());
 		return ResponseEntity.ok().body(userConverter.toDTO(user));
 	}
 }
