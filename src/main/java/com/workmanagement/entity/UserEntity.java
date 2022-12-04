@@ -1,7 +1,14 @@
 package com.workmanagement.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +41,16 @@ public class UserEntity extends BaseEntity {
 	
 	@Column(name = "status")
 	private int status;
+	
+	@OneToMany(mappedBy = "owner")
+	private List<BroadEntity> ownerBroads = new ArrayList<>();
+	
+	@ManyToMany
+	@JoinTable(name = "user_broad", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "broad_id"))
+	private List<BroadEntity> broads = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user")
+	private List<TaskEntity> tasks = new ArrayList<>();
 
 	public String getUserName() {
 		return userName;
@@ -105,5 +122,29 @@ public class UserEntity extends BaseEntity {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public List<BroadEntity> getOwnerBroads() {
+		return ownerBroads;
+	}
+
+	public void setOwnerBroads(List<BroadEntity> ownerBroads) {
+		this.ownerBroads = ownerBroads;
+	}
+
+	public List<BroadEntity> getBroads() {
+		return broads;
+	}
+
+	public void setBroads(List<BroadEntity> broads) {
+		this.broads = broads;
+	}
+
+	public List<TaskEntity> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<TaskEntity> tasks) {
+		this.tasks = tasks;
 	}
 }

@@ -1,4 +1,4 @@
-package com.workmanagement.converter;
+package com.workmanagement.mapper;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,7 @@ import com.workmanagement.dto.UserDTO;
 import com.workmanagement.entity.UserEntity;
 
 @Component
-public class UserConverter {
+public class UserMapper {
 	
 	public UserEntity toEntity(UserDTO dto) {
 		UserEntity entity = new UserEntity();
