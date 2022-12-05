@@ -35,9 +35,13 @@ public class AuthAPI {
 
 	@PostMapping(value = "/google")
 	public ResponseEntity<?> createGoogleUser(@RequestBody UserDTO dto) {
-		UserDTO user = userService.save(dto);
-		return ResponseEntity.ok().body(new LoginResponse(user.getUserName(), user.getGivenName(), user.getFamilyName(),
-				user.getDisplayName(), user.getAvatar(), user.getEmail(), jwtProvider.generateToken(user.getEmail()), null));
+		UserDTO user = userService.findGoogleUserByEmail(dto.getEmail());
+		if (user == null)
+			user = userService.save(dto);
+		return ResponseEntity.ok()
+				.body(new LoginResponse(user.getUserName(), user.getGivenName(), user.getFamilyName(),
+						user.getDisplayName(), user.getAvatar(), user.getEmail(),
+						jwtProvider.generateToken(user.getEmail()), null));
 	}
 
 	@GetMapping(value = "/test")
