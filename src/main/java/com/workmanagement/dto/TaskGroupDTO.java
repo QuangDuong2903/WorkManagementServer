@@ -6,8 +6,8 @@ import java.util.List;
 public class TaskGroupDTO extends BaseDTO {
 	private String name;
 	private String color;
-	private String broadId;
-	private List<String> tasks = new ArrayList<>();
+	private long broadId;
+	private List<Long> tasks = new ArrayList<>();
 	
 	public String getName() {
 		return name;
@@ -21,16 +21,16 @@ public class TaskGroupDTO extends BaseDTO {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public String getBroadId() {
+	public long getBroadId() {
 		return broadId;
 	}
-	public void setBroadId(String broadId) {
+	public void setBroadId(long broadId) {
 		this.broadId = broadId;
 	}
-	public List<String> getTasks() {
+	public List<Long> getTasks() {
 		return tasks;
 	}
-	public void setTasks(List<String> tasks) {
+	public void setTasks(List<Long> tasks) {
 		this.tasks = tasks;
 	}
 }

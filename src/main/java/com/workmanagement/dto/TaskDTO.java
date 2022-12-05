@@ -8,8 +8,8 @@ public class TaskDTO extends BaseDTO {
 	private Date endDate;
 	private String status;
 	private int priority;
-	private String groupId;
-	private String userId;
+	private long groupId;
+	private long userId;
 	
 	public String getName() {
 		return name;
@@ -41,16 +41,16 @@ public class TaskDTO extends BaseDTO {
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
-	public String getGroupId() {
+	public long getGroupId() {
 		return groupId;
 	}
-	public void setGroupId(String groupId) {
+	public void setGroupId(long groupId) {
 		this.groupId = groupId;
 	}
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 }

@@ -7,9 +7,9 @@ public class BroadDTO extends BaseDTO {
 
 	private String name;
 	private String description;
-	private String owner;
-	private List<String> user = new ArrayList<>();
-	private List<String> groups = new ArrayList<>();
+	private long owner;
+	private List<Long> users = new ArrayList<>();
+	private List<Long> groups = new ArrayList<>();
 	
 	public String getName() {
 		return name;
@@ -23,22 +23,22 @@ public class BroadDTO extends BaseDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getOwner() {
+	public long getOwner() {
 		return owner;
 	}
-	public void setOwner(String owner) {
+	public void setOwner(long owner) {
 		this.owner = owner;
 	}
-	public List<String> getUser() {
-		return user;
+	public List<Long> getUsers() {
+		return users;
 	}
-	public void setUser(List<String> user) {
-		this.user = user;
+	public void setUsers(List<Long> users) {
+		this.users = users;
 	}
-	public List<String> getGroups() {
+	public List<Long> getGroups() {
 		return groups;
 	}
-	public void setGroups(List<String> groups) {
+	public void setGroups(List<Long> groups) {
 		this.groups = groups;
 	}
 }
