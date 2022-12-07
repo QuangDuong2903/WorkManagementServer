@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.workmanagement.api.response.ErrorResponse;
 import com.workmanagement.dto.BroadDTO;
 import com.workmanagement.entity.BroadEntity;
 import com.workmanagement.mapper.BroadMapper;
@@ -43,9 +44,16 @@ public class BroadService implements IBroadService {
 				.getId();
 		for (long id : ids)
 			if (broadRespository.findById(id).orElse(null).getOwner().getId() != userid)
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(
+						Integer.toString(HttpStatus.FORBIDDEN.value()), HttpStatus.FORBIDDEN.name(), "/broad"));
 		for (long id : ids)
 			broadRespository.deleteById(id);
 		return ResponseEntity.ok().body(null);
+	}
+
+	@Override
+	@Transactional
+	public BroadDTO getBroadById(long id) {
+		return broadMapper.toDTO(broadRespository.findById(id).orElse(null));
 	}
 }

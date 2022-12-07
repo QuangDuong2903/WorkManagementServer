@@ -2,6 +2,8 @@ package com.workmanagement.utils;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,8 @@ public class JwtProvider {
 
 	@Value("${jwt.JWT_EXPIRATION}")
 	private long expiration;
+	
+	private Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
 	public String generateToken(Authentication authentication) {
 		Date now = new Date();
@@ -49,7 +53,7 @@ public class JwtProvider {
 			Jwts.parser().setSigningKey(signature).parseClaimsJws(token);
 			return true;
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		return false;
 	}

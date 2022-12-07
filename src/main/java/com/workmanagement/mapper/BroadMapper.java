@@ -27,6 +27,14 @@ public class BroadMapper {
 		long ownerId = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getId();
 		entity.setOwner(userRespository.findById(ownerId).orElse(null));
+		if (dto.getUsers() != null) {
+			List<UserEntity> users = new ArrayList<>();
+			if(dto.getUsers().size() > 0) {
+			for (long id : dto.getUsers()) 
+				users.add(userRespository.findById(id).orElse(null));
+			}
+			entity.setUsers(users);
+		}
 		return entity;
 	}
 

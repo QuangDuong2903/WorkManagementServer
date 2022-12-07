@@ -8,4 +8,5 @@ public interface IBroadService {
 	BroadDTO save(BroadDTO dto);
 	BroadDTO update(BroadDTO dto);
 	ResponseEntity<?> delete(long[] ids);
+	BroadDTO getBroadById(long id);
 }
