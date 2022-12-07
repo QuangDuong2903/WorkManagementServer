@@ -27,6 +27,14 @@ public class TaskGroupMapper {
 		return entity;
 	}
 
+	public TaskGroupEntity toEntity(TaskGroupDTO dto, TaskGroupEntity entity) {
+		if (dto.getName() != null)
+			entity.setName(dto.getName());
+		if (dto.getColor() != null)
+			entity.setColor(dto.getColor());
+		return entity;
+	}
+
 	public TaskGroupDTO toDTO(TaskGroupEntity entity) {
 		TaskGroupDTO dto = new TaskGroupDTO();
 		dto.setName(entity.getName());

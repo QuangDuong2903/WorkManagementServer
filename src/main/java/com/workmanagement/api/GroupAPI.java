@@ -15,64 +15,65 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.workmanagement.api.response.ErrorResponse;
-import com.workmanagement.dto.BroadDTO;
-import com.workmanagement.service.impl.BroadService;
+import com.workmanagement.dto.TaskGroupDTO;
+import com.workmanagement.service.impl.GroupService;
 
 @RestController
-@RequestMapping(value = "/broad")
-public class BroadAPI {
+@RequestMapping(value = "/group")
+public class GroupAPI {
 
-	private static final Logger logger = LoggerFactory.getLogger(BroadAPI.class);
-
-	@Autowired
-	private BroadService broadService;
+	private static final Logger logger = LoggerFactory.getLogger(GroupAPI.class);
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> getBroadById(@PathVariable("id") long id) {
-		try {
-			return ResponseEntity.ok().body(broadService.getBroadById(id));
-		} catch (Exception e) {
-			logger.error("Get broad by id error: " + e.getMessage());
-		}
-		return ResponseEntity.internalServerError()
-				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/broad/" + id));
-	}
+	@Autowired
+	private GroupService groupService;
 
 	@PostMapping
-	public ResponseEntity<?> createBroad(@RequestBody BroadDTO dto) {
+	public ResponseEntity<?> createGroup(@RequestBody TaskGroupDTO dto) {
 		try {
-			return ResponseEntity.ok().body(broadService.save(dto));
+			return ResponseEntity.ok().body(groupService.createGroup(dto));
 		} catch (Exception e) {
-			logger.error("Create broad error: " + e.getMessage());
+			logger.error("Create group error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/broad"));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group"));
 	}
-
+	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> updateBroad(@RequestBody BroadDTO dto, @PathVariable("id") long id) {
+	public ResponseEntity<?> updateGroup(@RequestBody TaskGroupDTO dto, @PathVariable("id") long id) {
 		try {
 			dto.setId(id);
-			return ResponseEntity.ok().body(broadService.update(dto));
+			return ResponseEntity.ok().body(groupService.updateGroup(dto));
 		} catch (Exception e) {
-			logger.error("Update broad error: " + e.getMessage());
+			logger.error("Update group error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/broad/" + id));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group" + id));
 	}
-
-	@DeleteMapping
-	public ResponseEntity<?> deleteBroad(@RequestBody long[] ids) {
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<?> getGroupById(@PathVariable("id") long id) {
 		try {
-			return broadService.delete(ids);
+			return ResponseEntity.ok().body(groupService.getGroupById(id));
 		} catch (Exception e) {
-			logger.error("Delete broad by ids error: " + e.getMessage());
+			logger.error("Get group by id error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/broad"));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group" + id));
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<?> deleteGroupByIds(@RequestBody long[] ids) {
+		try {
+			groupService.deleteGroupByIds(ids);
+			return ResponseEntity.ok().body(null);
+		} catch (Exception e) {
+			logger.error("Delete group by ids error: " + e.getMessage());
+		}
+		return ResponseEntity.internalServerError()
+				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group"));
 	}
 }
