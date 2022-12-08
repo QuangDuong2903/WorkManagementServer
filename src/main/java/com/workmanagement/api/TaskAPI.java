@@ -12,68 +12,69 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.workmanagement.api.response.ErrorResponse;
-import com.workmanagement.dto.TaskGroupDTO;
-import com.workmanagement.service.impl.GroupService;
+import com.workmanagement.dto.TaskDTO;
+import com.workmanagement.service.impl.TaskService;
 
 @RestController
-@RequestMapping(value = "/group")
-public class GroupAPI {
-
-	private static final Logger logger = LoggerFactory.getLogger(GroupAPI.class);
+@RequestMapping(value = "task")
+public class TaskAPI {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaskAPI.class);
 	
 	@Autowired
-	private GroupService groupService;
-
-	@PostMapping
-	public ResponseEntity<?> createGroup(@RequestBody TaskGroupDTO dto) {
+	private TaskService taskService;
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<?> getTaskById(@RequestParam("id") long id) {
 		try {
-			return ResponseEntity.ok().body(groupService.createGroup(dto));
+			return ResponseEntity.ok().body(taskService.getTaskById(id));
 		} catch (Exception e) {
-			logger.error("Create group error: " + e.getMessage());
+			logger.error("Get task by id error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group"));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/task/" + id));
+	}
+	
+	@PostMapping
+	public ResponseEntity<?> createTask(@RequestBody TaskDTO dto) {
+		try {
+			return ResponseEntity.ok().body(taskService.createTask(dto));
+		} catch (Exception e) {
+			logger.error("Create task error: " + e.getMessage());
+		}
+		return ResponseEntity.internalServerError()
+				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/task"));
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> updateGroup(@RequestBody TaskGroupDTO dto, @PathVariable("id") long id) {
+	public ResponseEntity<?> createTask(@RequestBody TaskDTO dto, @PathVariable("id") long id) {
 		try {
 			dto.setId(id);
-			return ResponseEntity.ok().body(groupService.updateGroup(dto));
+			return ResponseEntity.ok().body(taskService.updateTask(dto));
 		} catch (Exception e) {
-			logger.error("Update group error: " + e.getMessage());
+			logger.error("Update task error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group/" + id));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/task/" + id));
 	}
-	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> getGroupById(@PathVariable("id") long id) {
-		try {
-			return ResponseEntity.ok().body(groupService.getGroupById(id));
-		} catch (Exception e) {
-			logger.error("Get group by id error: " + e.getMessage());
-		}
-		return ResponseEntity.internalServerError()
-				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group/" + id));
-	}
-	
+
 	@DeleteMapping
-	public ResponseEntity<?> deleteGroupByIds(@RequestBody long[] ids) {
+	public ResponseEntity<?> deleteTask(@RequestBody long[] ids) {
 		try {
-			groupService.deleteGroupByIds(ids);
+			taskService.deleteTaskByIds(ids);
 			return ResponseEntity.ok().body(null);
 		} catch (Exception e) {
-			logger.error("Delete group by ids error: " + e.getMessage());
+			logger.error("Delete by ids task error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group"));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/task"));
 	}
 }

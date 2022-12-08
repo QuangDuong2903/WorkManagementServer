@@ -22,19 +22,19 @@ public class BroadService implements IBroadService {
 	private BroadRespository broadRespository;
 
 	@Autowired
-	private BroadMapper broadMapper;
+	private BroadMapper mapper;
 
 	@Override
 	@Transactional
 	public BroadDTO save(BroadDTO dto) {
-		return broadMapper.toDTO(broadRespository.save(broadMapper.toEntity(dto)));
+		return mapper.toDTO(broadRespository.save(mapper.toEntity(dto)));
 	}
 
 	@Override
 	@Transactional
 	public BroadDTO update(BroadDTO dto) {
 		BroadEntity entity = broadRespository.findById(dto.getId()).orElse(null);
-		return broadMapper.toDTO(broadRespository.save(broadMapper.toEntity(dto, entity)));
+		return mapper.toDTO(broadRespository.save(mapper.toEntity(dto, entity)));
 	}
 
 	@Override
@@ -54,6 +54,6 @@ public class BroadService implements IBroadService {
 	@Override
 	@Transactional
 	public BroadDTO getBroadById(long id) {
-		return broadMapper.toDTO(broadRespository.findById(id).orElse(null));
+		return mapper.toDTO(broadRespository.findById(id).orElse(null));
 	}
 }
