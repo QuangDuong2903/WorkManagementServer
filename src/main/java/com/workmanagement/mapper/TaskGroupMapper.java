@@ -37,6 +37,11 @@ public class TaskGroupMapper {
 
 	public TaskGroupDTO toDTO(TaskGroupEntity entity) {
 		TaskGroupDTO dto = new TaskGroupDTO();
+		dto.setId(entity.getId());
+		dto.setCreatedBy(entity.getCreatedBy());
+		dto.setCreatedDate(entity.getCreatedDate());
+		dto.setModifiedBy(entity.getModifiedBy());
+		dto.setModifiedDate(entity.getModifiedDate());
 		dto.setName(entity.getName());
 		dto.setColor(entity.getColor());
 		dto.setBroadId(entity.getBroad().getId());

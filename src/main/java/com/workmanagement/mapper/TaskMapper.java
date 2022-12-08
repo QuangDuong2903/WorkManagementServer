@@ -51,6 +51,10 @@ public class TaskMapper {
 	public TaskDTO toDTO(TaskEntity entity) {
 		TaskDTO dto = new TaskDTO();
 		dto.setId(entity.getId());
+		dto.setCreatedBy(entity.getCreatedBy());
+		dto.setCreatedDate(entity.getCreatedDate());
+		dto.setModifiedBy(entity.getModifiedBy());
+		dto.setModifiedDate(entity.getModifiedDate());
 		dto.setName(entity.getName());
 		dto.setStartDate(entity.getStartDate());
 		dto.setEndDate(entity.getEndDate());
