@@ -29,7 +29,7 @@ public class TaskAPI {
 	private TaskService taskService;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> getTaskById(@RequestParam("id") long id) {
+	public ResponseEntity<?> getTaskById(@PathVariable("id") long id) {
 		try {
 			return ResponseEntity.ok().body(taskService.getTaskById(id));
 		} catch (Exception e) {
