@@ -13,7 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.SessionManagementFilter;
 
+import com.workmanagement.filter.CORSFilter;
 import com.workmanagement.filter.JwtAuthenticationFilter;
 import com.workmanagement.security.CustomUserDetailService;
 
@@ -26,6 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public JwtAuthenticationFilter jwtAuthenticationFilter() {
 		return new JwtAuthenticationFilter();
+	}
+	
+	@Bean
+	public CORSFilter corsFilter() {
+		return new CORSFilter();
 	}
 	
 
@@ -48,18 +55,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		http
 		.httpBasic()
 		.and()
 		.authorizeRequests()
-		.antMatchers(HttpMethod.GET, "/auth/google").permitAll()
+		.antMatchers(HttpMethod.GET, "/auth/test").permitAll()
 		.antMatchers(HttpMethod.POST, "/auth/google").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.csrf().disable();
-		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+		.addFilterBefore(corsFilter(), SessionManagementFilter.class);
 		
 	}
 }
