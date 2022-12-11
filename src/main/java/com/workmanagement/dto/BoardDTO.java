@@ -3,7 +3,7 @@ package com.workmanagement.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BroadDTO extends BaseDTO {
+public class BoardDTO extends BaseDTO {
 
 	private String name;
 	private String description;

@@ -7,21 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.workmanagement.dto.BroadDTO;
-import com.workmanagement.entity.BroadEntity;
+import com.workmanagement.dto.BoardDTO;
+import com.workmanagement.entity.BoardEntity;
 import com.workmanagement.entity.TaskGroupEntity;
 import com.workmanagement.entity.UserEntity;
 import com.workmanagement.respository.UserRespository;
 import com.workmanagement.security.CustomUserDetail;
 
 @Component
-public class BroadMapper {
+public class BoardMapper {
 
 	@Autowired
 	private UserRespository userRespository;
 
-	public BroadEntity toEntity(BroadDTO dto) {
-		BroadEntity entity = new BroadEntity();
+	public BoardEntity toEntity(BoardDTO dto) {
+		BoardEntity entity = new BoardEntity();
 		entity.setName(dto.getName());
 		entity.setDescription(dto.getDescription());
 		long ownerId = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
@@ -38,7 +38,7 @@ public class BroadMapper {
 		return entity;
 	}
 
-	public BroadEntity toEntity(BroadDTO dto, BroadEntity entity) {
+	public BoardEntity toEntity(BoardDTO dto, BoardEntity entity) {
 		if (dto.getName() != null)
 			entity.setName(dto.getName());
 		if (dto.getDescription() != null)
@@ -52,8 +52,8 @@ public class BroadMapper {
 		return entity;
 	}
 
-	public BroadDTO toDTO(BroadEntity entity) {
-		BroadDTO dto = new BroadDTO();
+	public BoardDTO toDTO(BoardEntity entity) {
+		BoardDTO dto = new BoardDTO();
 		dto.setId(entity.getId());
 		dto.setCreatedBy(entity.getCreatedBy());
 		dto.setCreatedDate(entity.getCreatedDate());

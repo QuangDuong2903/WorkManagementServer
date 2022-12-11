@@ -41,10 +41,10 @@ public class UserEntity extends BaseEntity {
 	private int status;
 	
 	@OneToMany(mappedBy = "owner")
-	private List<BroadEntity> ownerBroads = new ArrayList<>();
+	private List<BoardEntity> ownerBoards = new ArrayList<>();
 	
 	@ManyToMany(mappedBy = "users")
-	private List<BroadEntity> broads = new ArrayList<>();
+	private List<BoardEntity> boards = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user")
 	private List<TaskEntity> tasks = new ArrayList<>();
@@ -121,20 +121,20 @@ public class UserEntity extends BaseEntity {
 		this.status = status;
 	}
 
-	public List<BroadEntity> getOwnerBroads() {
-		return ownerBroads;
+	public List<BoardEntity> getOwnerBoards() {
+		return ownerBoards;
 	}
 
-	public void setOwnerBroads(List<BroadEntity> ownerBroads) {
-		this.ownerBroads = ownerBroads;
+	public void setOwnerBoards(List<BoardEntity> ownerBoards) {
+		this.ownerBoards = ownerBoards;
 	}
 
-	public List<BroadEntity> getBroads() {
-		return broads;
+	public List<BoardEntity> getBoards() {
+		return boards;
 	}
 
-	public void setBroads(List<BroadEntity> broads) {
-		this.broads = broads;
+	public void setBoards(List<BoardEntity> boards) {
+		this.boards = boards;
 	}
 
 	public List<TaskEntity> getTasks() {

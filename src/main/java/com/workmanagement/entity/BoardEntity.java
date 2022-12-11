@@ -13,8 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "broad")
-public class BroadEntity extends BaseEntity {
+@Table(name = "board")
+public class BoardEntity extends BaseEntity {
 	
 	@Column(name = "name")
 	private String name;
@@ -27,10 +27,10 @@ public class BroadEntity extends BaseEntity {
 	private UserEntity owner;
 	
 	@ManyToMany
-	@JoinTable(name = "user_broad", joinColumns = @JoinColumn(name = "broad_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "user_board", joinColumns = @JoinColumn(name = "board_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<UserEntity> users = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "broad")
+	@OneToMany(mappedBy = "board")
 	private List<TaskGroupEntity> groups = new ArrayList<>();
 
 	public String getName() {

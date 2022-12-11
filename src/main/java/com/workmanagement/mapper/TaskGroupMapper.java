@@ -7,23 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.workmanagement.dto.TaskGroupDTO;
-import com.workmanagement.entity.BroadEntity;
+import com.workmanagement.entity.BoardEntity;
 import com.workmanagement.entity.TaskEntity;
 import com.workmanagement.entity.TaskGroupEntity;
-import com.workmanagement.respository.BroadRespository;
+import com.workmanagement.respository.BoardRespository;
 
 @Component
 public class TaskGroupMapper {
 
 	@Autowired
-	private BroadRespository broadRespository;
+	private BoardRespository broadRespository;
 
 	public TaskGroupEntity toEntity(TaskGroupDTO dto) {
 		TaskGroupEntity entity = new TaskGroupEntity();
 		entity.setName(dto.getName());
 		entity.setColor(dto.getColor());
-		BroadEntity broadEntity = broadRespository.findById(dto.getBroadId()).orElse(null);
-		entity.setBroad(broadEntity);
+		BoardEntity broadEntity = broadRespository.findById(dto.getBroadId()).orElse(null);
+		entity.setBoard(broadEntity);
 		return entity;
 	}
 
@@ -44,7 +44,7 @@ public class TaskGroupMapper {
 		dto.setModifiedDate(entity.getModifiedDate());
 		dto.setName(entity.getName());
 		dto.setColor(entity.getColor());
-		dto.setBroadId(entity.getBroad().getId());
+		dto.setBroadId(entity.getBoard().getId());
 		List<Long> tasks = new ArrayList<>();
 		for (TaskEntity taskEntity : entity.getTasks())
 			tasks.add(taskEntity.getId());

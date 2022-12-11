@@ -21,8 +21,8 @@ public class TaskGroupEntity extends BaseEntity {
 	private String color;
 	
 	@ManyToOne
-	@JoinColumn(name = "broad_id")
-	private BroadEntity broad;
+	@JoinColumn(name = "board_id")
+	private BoardEntity board;
 	
 	@OneToMany(mappedBy = "group")
 	private List<TaskEntity> tasks = new ArrayList<>();
@@ -43,12 +43,12 @@ public class TaskGroupEntity extends BaseEntity {
 		this.color = color;
 	}
 
-	public BroadEntity getBroad() {
-		return broad;
+	public BoardEntity getBoard() {
+		return board;
 	}
 
-	public void setBroad(BroadEntity broad) {
-		this.broad = broad;
+	public void setBoard(BoardEntity board) {
+		this.board = board;
 	}
 
 	public List<TaskEntity> getTasks() {

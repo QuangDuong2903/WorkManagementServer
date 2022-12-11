@@ -8,32 +8,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.workmanagement.api.response.ErrorResponse;
-import com.workmanagement.dto.BroadDTO;
-import com.workmanagement.entity.BroadEntity;
-import com.workmanagement.mapper.BroadMapper;
-import com.workmanagement.respository.BroadRespository;
+import com.workmanagement.dto.BoardDTO;
+import com.workmanagement.entity.BoardEntity;
+import com.workmanagement.mapper.BoardMapper;
+import com.workmanagement.respository.BoardRespository;
 import com.workmanagement.security.CustomUserDetail;
-import com.workmanagement.service.IBroadService;
+import com.workmanagement.service.IBoardService;
 
 @Service
-public class BroadService implements IBroadService {
+public class BoardService implements IBoardService {
 
 	@Autowired
-	private BroadRespository broadRespository;
+	private BoardRespository broadRespository;
 
 	@Autowired
-	private BroadMapper mapper;
+	private BoardMapper mapper;
 
 	@Override
 	@Transactional
-	public BroadDTO save(BroadDTO dto) {
+	public BoardDTO save(BoardDTO dto) {
 		return mapper.toDTO(broadRespository.save(mapper.toEntity(dto)));
 	}
 
 	@Override
 	@Transactional
-	public BroadDTO update(BroadDTO dto) {
-		BroadEntity entity = broadRespository.findById(dto.getId()).orElse(null);
+	public BoardDTO update(BoardDTO dto) {
+		BoardEntity entity = broadRespository.findById(dto.getId()).orElse(null);
 		return mapper.toDTO(broadRespository.save(mapper.toEntity(dto, entity)));
 	}
 
@@ -53,7 +53,7 @@ public class BroadService implements IBroadService {
 
 	@Override
 	@Transactional
-	public BroadDTO getBroadById(long id) {
+	public BoardDTO getBroadById(long id) {
 		return mapper.toDTO(broadRespository.findById(id).orElse(null));
 	}
 }

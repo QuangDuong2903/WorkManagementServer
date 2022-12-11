@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.workmanagement.api.response.ErrorResponse;
-import com.workmanagement.dto.BroadDTO;
-import com.workmanagement.service.impl.BroadService;
+import com.workmanagement.dto.BoardDTO;
+import com.workmanagement.service.impl.BoardService;
 
 @RestController
-@RequestMapping(value = "/broad")
-public class BroadAPI {
+@RequestMapping(value = "/board")
+public class BoardAPI {
 
-	private static final Logger logger = LoggerFactory.getLogger(BroadAPI.class);
+	private static final Logger logger = LoggerFactory.getLogger(BoardAPI.class);
 
 	@Autowired
-	private BroadService broadService;
+	private BoardService boardService;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> getBroadById(@PathVariable("id") long id) {
+	public ResponseEntity<?> getBoardById(@PathVariable("id") long id) {
 		try {
-			return ResponseEntity.ok().body(broadService.getBroadById(id));
+			return ResponseEntity.ok().body(boardService.getBroadById(id));
 		} catch (Exception e) {
-			logger.error("Get broad by id error: " + e.getMessage());
+			logger.error("Get board by id error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
@@ -40,9 +40,9 @@ public class BroadAPI {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> createBroad(@RequestBody BroadDTO dto) {
+	public ResponseEntity<?> createBoard(@RequestBody BoardDTO dto) {
 		try {
-			return ResponseEntity.ok().body(broadService.save(dto));
+			return ResponseEntity.ok().body(boardService.save(dto));
 		} catch (Exception e) {
 			logger.error("Create broad error: " + e.getMessage());
 		}
@@ -52,10 +52,10 @@ public class BroadAPI {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> updateBroad(@RequestBody BroadDTO dto, @PathVariable("id") long id) {
+	public ResponseEntity<?> updateBoard(@RequestBody BoardDTO dto, @PathVariable("id") long id) {
 		try {
 			dto.setId(id);
-			return ResponseEntity.ok().body(broadService.update(dto));
+			return ResponseEntity.ok().body(boardService.update(dto));
 		} catch (Exception e) {
 			logger.error("Update broad error: " + e.getMessage());
 		}
@@ -67,9 +67,9 @@ public class BroadAPI {
 	@DeleteMapping
 	public ResponseEntity<?> deleteBroad(@RequestBody long[] ids) {
 		try {
-			return broadService.delete(ids);
+			return boardService.delete(ids);
 		} catch (Exception e) {
-			logger.error("Delete broad by ids error: " + e.getMessage());
+			logger.error("Delete board by ids error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
