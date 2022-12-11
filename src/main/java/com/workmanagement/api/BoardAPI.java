@@ -27,16 +27,28 @@ public class BoardAPI {
 	@Autowired
 	private BoardService boardService;
 	
+	@GetMapping
+	public ResponseEntity<?> getAllBoardOfUser() {
+		try {
+			return ResponseEntity.ok().body(boardService.getAllBoardOfUser());
+		} catch (Exception e) {
+			logger.error("Get all board of user error: " + e.getMessage());
+		}
+		return ResponseEntity.internalServerError()
+				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board"));
+	}
+	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> getBoardById(@PathVariable("id") long id) {
 		try {
-			return ResponseEntity.ok().body(boardService.getBroadById(id));
+			return ResponseEntity.ok().body(boardService.getBoardById(id));
 		} catch (Exception e) {
 			logger.error("Get board by id error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/broad/" + id));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board/" + id));
 	}
 
 	@PostMapping
@@ -48,7 +60,7 @@ public class BoardAPI {
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/broad"));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board"));
 	}
 
 	@PutMapping(value = "/{id}")
@@ -61,7 +73,7 @@ public class BoardAPI {
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/broad/" + id));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board/" + id));
 	}
 
 	@DeleteMapping
@@ -73,6 +85,6 @@ public class BoardAPI {
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/broad"));
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board"));
 	}
 }
