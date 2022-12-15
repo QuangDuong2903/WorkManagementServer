@@ -3,6 +3,7 @@ package com.workmanagement.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -24,7 +25,7 @@ public class TaskGroupEntity extends BaseEntity {
 	@JoinColumn(name = "board_id")
 	private BoardEntity board;
 	
-	@OneToMany(mappedBy = "group")
+	@OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE)
 	private List<TaskEntity> tasks = new ArrayList<>();
 
 	public String getName() {

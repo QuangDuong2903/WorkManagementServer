@@ -64,6 +64,18 @@ public class GroupAPI {
 						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group/" + id));
 	}
 	
+	@GetMapping(value = "/board/{id}")
+	public ResponseEntity<?> getAllGroupOfBoardId(@PathVariable("id") long id) {
+		try {
+			return ResponseEntity.ok().body(groupService.getAllGroupOfBoardId(id));
+		} catch (Exception e) {
+			logger.error("Get all group of board by id error: " + e.getMessage());
+		}
+		return ResponseEntity.internalServerError()
+				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group/board/" + id));
+	}
+	
 	@DeleteMapping
 	public ResponseEntity<?> deleteGroupByIds(@RequestBody long[] ids) {
 		try {

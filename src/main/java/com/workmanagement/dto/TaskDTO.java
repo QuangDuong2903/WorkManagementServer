@@ -10,6 +10,8 @@ public class TaskDTO extends BaseDTO {
 	private int priority;
 	private long groupId;
 	private long userId;
+	private String userAvatar;
+	private String userEmail;
 	
 	public String getName() {
 		return name;
@@ -52,5 +54,17 @@ public class TaskDTO extends BaseDTO {
 	}
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+	public String getUserAvatar() {
+		return userAvatar;
+	}
+	public void setUserAvatar(String userAvatar) {
+		this.userAvatar = userAvatar;
+	}
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 }

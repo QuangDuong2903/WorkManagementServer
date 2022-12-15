@@ -62,6 +62,8 @@ public class TaskMapper {
 		dto.setPriority(entity.getPriority());
 		dto.setGroupId(entity.getGroup().getId());
 		dto.setUserId(entity.getUser().getId());
+		dto.setUserAvatar(entity.getUser().getAvatar());
+		dto.setUserEmail(entity.getUser().getEmail());
 		return dto;
 	}
 }
