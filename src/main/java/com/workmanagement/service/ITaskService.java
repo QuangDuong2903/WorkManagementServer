@@ -6,5 +6,5 @@ public interface ITaskService {
 	TaskDTO getTaskById(long id);
 	TaskDTO createTask(TaskDTO dto);
 	TaskDTO updateTask(TaskDTO dto);
-	void deleteTaskByIds(long[] ids);
+	void deleteTaskById(long id);
 }

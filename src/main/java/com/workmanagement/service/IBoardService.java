@@ -9,7 +9,7 @@ import com.workmanagement.dto.BoardDTO;
 public interface IBoardService {
 	BoardDTO save(BoardDTO dto);
 	BoardDTO update(BoardDTO dto);
-	ResponseEntity<?> delete(long[] ids);
+	ResponseEntity<?> delete(long id);
 	BoardDTO getBoardById(long id);
 	List<BoardDTO> getAllBoardOfUser();
 }

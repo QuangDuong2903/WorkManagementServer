@@ -27,7 +27,7 @@ public class TaskGroupMapper {
 		TaskGroupEntity entity = new TaskGroupEntity();
 		entity.setName(dto.getName());
 		entity.setColor(dto.getColor());
-		BoardEntity broadEntity = broadRespository.findById(dto.getBroadId()).orElse(null);
+		BoardEntity broadEntity = broadRespository.findById(dto.getBoardId()).orElse(null);
 		entity.setBoard(broadEntity);
 		return entity;
 	}
@@ -49,7 +49,7 @@ public class TaskGroupMapper {
 		dto.setModifiedDate(entity.getModifiedDate());
 		dto.setName(entity.getName());
 		dto.setColor(entity.getColor());
-		dto.setBroadId(entity.getBoard().getId());
+		dto.setBoardId(entity.getBoard().getId());
 		List<Long> tasks = new ArrayList<>();
 		for (TaskEntity taskEntity : entity.getTasks())
 			tasks.add(taskEntity.getId());
@@ -66,7 +66,6 @@ public class TaskGroupMapper {
 		dto.setModifiedDate(entity.getModifiedDate());
 		dto.setName(entity.getName());
 		dto.setColor(entity.getColor());
-		dto.setBroadId(entity.getBoard().getId());
 		List<TaskDTO> tasks = new ArrayList<>();
 		for (TaskEntity taskEntity : entity.getTasks())
 			tasks.add(taskMapper.toDTO(taskEntity));

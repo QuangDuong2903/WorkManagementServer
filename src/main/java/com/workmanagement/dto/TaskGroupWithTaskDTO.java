@@ -6,7 +6,6 @@ import java.util.List;
 public class TaskGroupWithTaskDTO extends BaseDTO {
 	private String name;
 	private String color;
-	private long broadId;
 	private List<TaskDTO> tasks = new ArrayList<>();
 	
 	public String getName() {
@@ -20,12 +19,6 @@ public class TaskGroupWithTaskDTO extends BaseDTO {
 	}
 	public void setColor(String color) {
 		this.color = color;
-	}
-	public long getBroadId() {
-		return broadId;
-	}
-	public void setBroadId(long broadId) {
-		this.broadId = broadId;
 	}
 	public List<TaskDTO> getTasks() {
 		return tasks;

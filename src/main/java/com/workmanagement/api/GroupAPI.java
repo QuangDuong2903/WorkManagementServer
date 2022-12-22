@@ -76,13 +76,13 @@ public class GroupAPI {
 						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/group/board/" + id));
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<?> deleteGroupByIds(@RequestBody long[] ids) {
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<?> deleteGroupById(@PathVariable("id") long id) {
 		try {
-			groupService.deleteGroupByIds(ids);
+			groupService.deleteGroupById(id);
 			return ResponseEntity.ok().body(null);
 		} catch (Exception e) {
-			logger.error("Delete group by ids error: " + e.getMessage());
+			logger.error("Delete group by id error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),

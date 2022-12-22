@@ -66,7 +66,7 @@ public class BoardMapper {
 		dto.setUsers(users);
 		List<Long> groups = new ArrayList<>();
 		for (TaskGroupEntity group : entity.getGroups())
-			users.add(group.getId());
+			groups.add(group.getId());
 		dto.setGroups(groups);
 		return dto;
 	}

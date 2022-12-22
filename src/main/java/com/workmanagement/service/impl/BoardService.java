@@ -25,7 +25,7 @@ public class BoardService implements IBoardService {
 
 	@Autowired
 	private BoardRespository boardRespository;
-	
+
 	@Autowired
 	private UserRespository userRespository;
 
@@ -47,15 +47,13 @@ public class BoardService implements IBoardService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> delete(long[] ids) {
+	public ResponseEntity<?> delete(long id) {
 		long userid = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getId();
-		for (long id : ids)
-			if (boardRespository.findById(id).orElse(null).getOwner().getId() != userid)
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(
-						Integer.toString(HttpStatus.FORBIDDEN.value()), HttpStatus.FORBIDDEN.name(), "/board"));
-		for (long id : ids)
-			boardRespository.deleteById(id);
+		if (boardRespository.findById(id).orElse(null).getOwner().getId() != userid)
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(
+					Integer.toString(HttpStatus.FORBIDDEN.value()), HttpStatus.FORBIDDEN.name(), "/board"));
+		boardRespository.deleteById(id);
 		return ResponseEntity.ok().body(null);
 	}
 
@@ -68,8 +66,7 @@ public class BoardService implements IBoardService {
 	@Override
 	@Transactional
 	public List<BoardDTO> getAllBoardOfUser() {
-		long id = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-				.getId();
+		long id = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 		List<BoardDTO> boards = new ArrayList<>();
 		UserEntity user = userRespository.findById(id).orElse(null);
 		for (BoardEntity board : user.getOwnerBoards())

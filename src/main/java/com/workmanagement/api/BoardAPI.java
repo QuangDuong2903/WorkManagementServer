@@ -76,12 +76,12 @@ public class BoardAPI {
 						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board/" + id));
 	}
 
-	@DeleteMapping
-	public ResponseEntity<?> deleteBroad(@RequestBody long[] ids) {
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<?> deleteBroad(@PathVariable("id") long id) {
 		try {
-			return boardService.delete(ids);
+			return boardService.delete(id);
 		} catch (Exception e) {
-			logger.error("Delete board by ids error: " + e.getMessage());
+			logger.error("Delete board by id error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),

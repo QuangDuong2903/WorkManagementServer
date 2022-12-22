@@ -11,10 +11,10 @@ import com.workmanagement.service.ITaskService;
 
 @Service
 public class TaskService implements ITaskService {
-	
+
 	@Autowired
 	private TaskRepository taskRepository;
-	
+
 	@Autowired
 	private TaskMapper mapper;
 
@@ -35,9 +35,8 @@ public class TaskService implements ITaskService {
 	}
 
 	@Override
-	public void deleteTaskByIds(long[] ids) {
-		for(long id : ids)
-			taskRepository.deleteById(id);
+	public void deleteTaskById(long id) {
+		taskRepository.deleteById(id);
 	}
 
 }

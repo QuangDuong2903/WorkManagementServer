@@ -64,13 +64,13 @@ public class TaskAPI {
 						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/task/" + id));
 	}
 
-	@DeleteMapping
-	public ResponseEntity<?> deleteTask(@RequestBody long[] ids) {
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<?> deleteTask(@PathVariable("id") long id) {
 		try {
-			taskService.deleteTaskByIds(ids);
+			taskService.deleteTaskById(id);
 			return ResponseEntity.ok().body(null);
 		} catch (Exception e) {
-			logger.error("Delete by ids task error: " + e.getMessage());
+			logger.error("Delete by id task error: " + e.getMessage());
 		}
 		return ResponseEntity.internalServerError()
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),

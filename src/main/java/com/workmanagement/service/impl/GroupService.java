@@ -42,9 +42,8 @@ public class GroupService implements IGroupService {
 
 	@Override
 	@Transactional
-	public void deleteGroupByIds(long[] ids) {
-		for (long id : ids)
-			taskGroupRepository.deleteById(id);
+	public void deleteGroupById(long id) {
+		taskGroupRepository.deleteById(id);
 	}
 
 	@Override
