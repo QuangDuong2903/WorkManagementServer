@@ -26,7 +26,19 @@ public class BoardAPI {
 
 	@Autowired
 	private BoardService boardService;
-	
+
+	@GetMapping(value = "/{id}/users")
+	public ResponseEntity<?> getAllUserOfBoard(@PathVariable("id") long id) {
+		try {
+			return ResponseEntity.ok().body(boardService.getAllUserOfBoard(id));
+		} catch (Exception e) {
+			logger.error("Get all user of board error: " + e.getMessage());
+		}
+		return ResponseEntity.internalServerError()
+				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board/" + id + "/users"));
+	}
+
 	@GetMapping
 	public ResponseEntity<?> getAllBoardOfUser() {
 		try {
@@ -38,7 +50,7 @@ public class BoardAPI {
 				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
 						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board"));
 	}
-	
+
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> getBoardById(@PathVariable("id") long id) {
 		try {

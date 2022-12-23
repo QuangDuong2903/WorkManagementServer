@@ -12,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.workmanagement.api.response.ErrorResponse;
 import com.workmanagement.dto.BoardDTO;
+import com.workmanagement.dto.UserDTO;
 import com.workmanagement.entity.BoardEntity;
 import com.workmanagement.entity.UserEntity;
 import com.workmanagement.mapper.BoardMapper;
+import com.workmanagement.mapper.UserMapper;
 import com.workmanagement.respository.BoardRespository;
 import com.workmanagement.respository.UserRespository;
 import com.workmanagement.security.CustomUserDetail;
@@ -30,19 +32,22 @@ public class BoardService implements IBoardService {
 	private UserRespository userRespository;
 
 	@Autowired
-	private BoardMapper mapper;
+	private BoardMapper boardMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@Override
 	@Transactional
 	public BoardDTO save(BoardDTO dto) {
-		return mapper.toDTO(boardRespository.save(mapper.toEntity(dto)));
+		return boardMapper.toDTO(boardRespository.save(boardMapper.toEntity(dto)));
 	}
 
 	@Override
 	@Transactional
 	public BoardDTO update(BoardDTO dto) {
 		BoardEntity entity = boardRespository.findById(dto.getId()).orElse(null);
-		return mapper.toDTO(boardRespository.save(mapper.toEntity(dto, entity)));
+		return boardMapper.toDTO(boardRespository.save(boardMapper.toEntity(dto, entity)));
 	}
 
 	@Override
@@ -60,7 +65,7 @@ public class BoardService implements IBoardService {
 	@Override
 	@Transactional
 	public BoardDTO getBoardById(long id) {
-		return mapper.toDTO(boardRespository.findById(id).orElse(null));
+		return boardMapper.toDTO(boardRespository.findById(id).orElse(null));
 	}
 
 	@Override
@@ -70,9 +75,18 @@ public class BoardService implements IBoardService {
 		List<BoardDTO> boards = new ArrayList<>();
 		UserEntity user = userRespository.findById(id).orElse(null);
 		for (BoardEntity board : user.getOwnerBoards())
-			boards.add(mapper.toDTO(board));
+			boards.add(boardMapper.toDTO(board));
 		for (BoardEntity board : user.getBoards())
-			boards.add(mapper.toDTO(board));
+			boards.add(boardMapper.toDTO(board));
 		return boards;
+	}
+
+	@Override
+	public List<UserDTO> getAllUserOfBoard(long id) {
+		BoardEntity entity = boardRespository.findById(id).orElse(null);
+		List<UserDTO> users = new ArrayList<>();
+		users.add(userMapper.toDTO(entity.getOwner()));
+		entity.getUsers().forEach(user -> users.add(userMapper.toDTO(user)));
+		return users;
 	}
 }
