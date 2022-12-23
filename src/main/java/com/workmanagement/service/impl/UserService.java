@@ -1,5 +1,8 @@
 package com.workmanagement.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +21,7 @@ public class UserService implements IUserService {
 	private UserRespository userRespository;
 
 	@Autowired
-	private UserMapper userConverter;
+	private UserMapper userMapper;
 
 	@Override
 	@Transactional
@@ -26,9 +29,9 @@ public class UserService implements IUserService {
 		UserEntity user = userRespository.findOneByUserNameAndTypeAndStatus(dto.getEmail(), dto.getType(),
 				dto.getStatus());
 		if (user != null)
-			return userConverter.toDTO(user);
-		user = userRespository.save(userConverter.toEntity(dto));
-		return userConverter.toDTO(user);
+			return userMapper.toDTO(user);
+		user = userRespository.save(userMapper.toEntity(dto));
+		return userMapper.toDTO(user);
 	}
 
 	@Override
@@ -37,6 +40,14 @@ public class UserService implements IUserService {
 				SystemConstant.ACTIVE_STATUS);
 		if (user == null)
 			return null;
-		return userConverter.toDTO(user);
+		return userMapper.toDTO(user);
+	}
+
+	@Override
+	public List<UserDTO> searchUser(String key) {
+		List<UserEntity> userEntities = userRespository.findByDisplayNameContainingOrEmailContaining(key, key);
+		List<UserDTO> users = new ArrayList<>();
+		userEntities.forEach(user -> users.add(userMapper.toDTO(user)));
+		return users;
 	}
 }
