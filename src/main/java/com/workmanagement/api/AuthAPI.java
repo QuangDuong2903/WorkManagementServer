@@ -29,8 +29,10 @@ public class AuthAPI {
 		UserDTO user = userService.findGoogleUserByEmail(email);
 		if (user == null)
 			return ResponseEntity.badRequest().body(null);
-		return ResponseEntity.ok().body(new LoginResponse(user.getUserName(), user.getGivenName(), user.getFamilyName(),
-				user.getDisplayName(), user.getAvatar(), user.getEmail(), jwtProvider.generateToken(email), null));
+		return ResponseEntity.ok()
+				.body(new LoginResponse(user.getId(), user.getUserName(), user.getGivenName(), user.getFamilyName(),
+						user.getDisplayName(), user.getAvatar(), user.getEmail(), jwtProvider.generateToken(email),
+						null));
 	}
 
 	@PostMapping(value = "/google")
@@ -39,7 +41,7 @@ public class AuthAPI {
 		if (user == null)
 			user = userService.save(dto);
 		return ResponseEntity.ok()
-				.body(new LoginResponse(user.getUserName(), user.getGivenName(), user.getFamilyName(),
+				.body(new LoginResponse(user.getId(), user.getUserName(), user.getGivenName(), user.getFamilyName(),
 						user.getDisplayName(), user.getAvatar(), user.getEmail(),
 						jwtProvider.generateToken(user.getEmail()), null));
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.workmanagement.constant.SystemConstant;
 import com.workmanagement.dto.UserDTO;
@@ -45,6 +46,8 @@ public class UserService implements IUserService {
 
 	@Override
 	public List<UserDTO> searchUser(String key) {
+		if(!StringUtils.hasText(key))
+			return new ArrayList<>();
 		List<UserEntity> userEntities = userRespository.findByDisplayNameContainingOrEmailContaining(key, key);
 		List<UserDTO> users = new ArrayList<>();
 		userEntities.forEach(user -> users.add(userMapper.toDTO(user)));
