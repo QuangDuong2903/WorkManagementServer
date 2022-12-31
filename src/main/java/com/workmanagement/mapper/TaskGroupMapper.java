@@ -12,13 +12,13 @@ import com.workmanagement.dto.TaskGroupDTO;
 import com.workmanagement.entity.BoardEntity;
 import com.workmanagement.entity.TaskEntity;
 import com.workmanagement.entity.TaskGroupEntity;
-import com.workmanagement.respository.BoardRespository;
+import com.workmanagement.respository.BoardRepository;
 
 @Component
 public class TaskGroupMapper {
 
 	@Autowired
-	private BoardRespository broadRespository;
+	private BoardRepository broadRespository;
 	
 	@Autowired
 	private TaskMapper taskMapper;

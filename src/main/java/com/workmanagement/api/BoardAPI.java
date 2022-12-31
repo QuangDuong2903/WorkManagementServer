@@ -88,6 +88,30 @@ public class BoardAPI {
 						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board/" + id));
 	}
 
+	@PostMapping(value = "/{id}/users")
+	public ResponseEntity<?> inviteUser(@PathVariable("id") long boardId, @RequestBody long[] ids) {
+		try {
+			return boardService.inviteUser(boardId, ids);
+		} catch (Exception e) {
+			logger.error("Invite user error: " + e.getMessage());
+		}
+		return ResponseEntity.internalServerError()
+				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board/" + boardId + "/users/"));
+	}
+
+	@PutMapping(value = "/{id}/notification/{notiId}/users")
+	public ResponseEntity<?> addUser(@PathVariable("id") long id, @PathVariable("notiId")long notiId) {
+		try {
+			return ResponseEntity.ok().body(boardService.addUser(id, notiId));
+		} catch (Exception e) {
+			logger.error("Join broad error: " + e.getMessage());
+		}
+		return ResponseEntity.internalServerError()
+				.body(new ErrorResponse(Integer.toString(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+						HttpStatus.INTERNAL_SERVER_ERROR.name(), "/board/" + id + "/users/"));
+	}
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> deleteBroad(@PathVariable("id") long id) {
 		try {

@@ -16,6 +16,7 @@ public class ChatController {
 	public MessageDTO sendMessage(@Payload MessageDTO message) {
 		return message;
 	}
+	
 
 	@MessageMapping("/join/{id}")
 	@SendTo("/chatroom/{id}")

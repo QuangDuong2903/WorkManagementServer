@@ -27,12 +27,12 @@ public class BoardMapper {
 		long ownerId = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getId();
 		entity.setOwner(userRespository.findById(ownerId).orElse(null));
-		if (dto.getUsers().size() > 0) {
-			List<UserEntity> users = new ArrayList<>();
-			for (long id : dto.getUsers()) 
-				users.add(userRespository.findById(id).orElse(null));
-			entity.setUsers(users);
-		}
+//		if (dto.getUsers().size() > 0) {
+//			List<UserEntity> users = new ArrayList<>();
+//			for (long id : dto.getUsers()) 
+//				users.add(userRespository.findById(id).orElse(null));
+//			entity.setUsers(users);
+//		}
 		return entity;
 	}
 
@@ -41,12 +41,12 @@ public class BoardMapper {
 			entity.setName(dto.getName());
 		if (dto.getDescription() != null)
 			entity.setDescription(dto.getDescription());
-		if (dto.getUsers().size() > 0) {
-			List<UserEntity> users = new ArrayList<>();
-			for (long id : dto.getUsers())
-				users.add(userRespository.findById(id).orElse(null));
-			entity.setUsers(users);
-		}
+//		if (dto.getUsers().size() > 0) {
+//			List<UserEntity> users = new ArrayList<>();
+//			for (long id : dto.getUsers())
+//				users.add(userRespository.findById(id).orElse(null));
+//			entity.setUsers(users);
+//		}
 		return entity;
 	}
 

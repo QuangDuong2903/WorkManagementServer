@@ -12,7 +12,7 @@ import com.workmanagement.dto.TaskGroupDTO;
 import com.workmanagement.entity.BoardEntity;
 import com.workmanagement.entity.TaskGroupEntity;
 import com.workmanagement.mapper.TaskGroupMapper;
-import com.workmanagement.respository.BoardRespository;
+import com.workmanagement.respository.BoardRepository;
 import com.workmanagement.respository.TaskGroupRepository;
 import com.workmanagement.service.IGroupService;
 
@@ -26,7 +26,7 @@ public class GroupService implements IGroupService {
 	private TaskGroupRepository taskGroupRepository;
 	
 	@Autowired
-	private BoardRespository boardRespository;
+	private BoardRepository boardRespository;
 
 	@Override
 	@Transactional

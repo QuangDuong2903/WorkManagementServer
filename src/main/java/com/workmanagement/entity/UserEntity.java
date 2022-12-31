@@ -48,6 +48,9 @@ public class UserEntity extends BaseEntity {
 	
 	@OneToMany(mappedBy = "user")
 	private List<TaskEntity> tasks = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user")
+	private List<NotificationEntity> notitfications= new ArrayList<>();
 
 	public String getUserName() {
 		return userName;
@@ -143,5 +146,13 @@ public class UserEntity extends BaseEntity {
 
 	public void setTasks(List<TaskEntity> tasks) {
 		this.tasks = tasks;
+	}
+
+	public List<NotificationEntity> getNotitfications() {
+		return notitfications;
+	}
+
+	public void setNotitfications(List<NotificationEntity> notitfications) {
+		this.notitfications = notitfications;
 	}
 }

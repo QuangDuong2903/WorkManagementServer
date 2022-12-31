@@ -10,6 +10,8 @@ import com.workmanagement.dto.UserDTO;
 public interface IBoardService {
 	BoardDTO save(BoardDTO dto);
 	BoardDTO update(BoardDTO dto);
+	ResponseEntity<?> inviteUser(long boardId, long[] ids);
+	BoardDTO addUser(long id, long notiId);
 	ResponseEntity<?> delete(long id);
 	BoardDTO getBoardById(long id);
 	List<BoardDTO> getAllBoardOfUser();
