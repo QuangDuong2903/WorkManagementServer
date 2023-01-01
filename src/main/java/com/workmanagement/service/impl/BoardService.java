@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.workmanagement.api.response.ErrorResponse;
 import com.workmanagement.constant.SystemConstant;
 import com.workmanagement.dto.BoardDTO;
 import com.workmanagement.dto.NotificationDTO;
 import com.workmanagement.dto.UserDTO;
 import com.workmanagement.entity.BoardEntity;
 import com.workmanagement.entity.UserEntity;
+import com.workmanagement.exception.ResourceForbiddenException;
+import com.workmanagement.exception.ResourceNotFoundException;
 import com.workmanagement.mapper.BoardMapper;
 import com.workmanagement.mapper.UserMapper;
 import com.workmanagement.respository.BoardRepository;
@@ -55,7 +55,8 @@ public class BoardService implements IBoardService {
 	@Override
 	@Transactional
 	public BoardDTO update(BoardDTO dto) {
-		BoardEntity entity = boardRespository.findById(dto.getId()).orElse(null);
+		BoardEntity entity = boardRespository.findById(dto.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Not found board with id = " + dto.getId()));
 		return boardMapper.toDTO(boardRespository.save(boardMapper.toEntity(dto, entity)));
 	}
 
@@ -64,9 +65,10 @@ public class BoardService implements IBoardService {
 	public ResponseEntity<?> delete(long id) {
 		long userid = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getId();
-		if (boardRespository.findById(id).orElse(null).getOwner().getId() != userid)
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(
-					Integer.toString(HttpStatus.FORBIDDEN.value()), HttpStatus.FORBIDDEN.name(), "/board"));
+		if (boardRespository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found board with id = " + id)).getOwner()
+				.getId() != userid)
+			throw new ResourceForbiddenException("Dont't have permisson");
 		boardRespository.deleteById(id);
 		return ResponseEntity.ok().body(null);
 	}
@@ -74,7 +76,8 @@ public class BoardService implements IBoardService {
 	@Override
 	@Transactional
 	public BoardDTO getBoardById(long id) {
-		return boardMapper.toDTO(boardRespository.findById(id).orElse(null));
+		return boardMapper.toDTO(boardRespository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found board with id = " + id)));
 	}
 
 	@Override
@@ -82,7 +85,8 @@ public class BoardService implements IBoardService {
 	public List<BoardDTO> getAllBoardOfUser() {
 		long id = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 		List<BoardDTO> boards = new ArrayList<>();
-		UserEntity user = userRespository.findById(id).orElse(null);
+		UserEntity user = userRespository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found board with id = " + id));
 		for (BoardEntity board : user.getOwnerBoards())
 			boards.add(boardMapper.toDTO(board));
 		for (BoardEntity board : user.getBoards())
@@ -92,7 +96,8 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public List<UserDTO> getAllUserOfBoard(long id) {
-		BoardEntity entity = boardRespository.findById(id).orElse(null);
+		BoardEntity entity = boardRespository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found board with id = " + id));
 		List<UserDTO> users = new ArrayList<>();
 		users.add(userMapper.toDTO(entity.getOwner()));
 		entity.getUsers().forEach(user -> users.add(userMapper.toDTO(user)));
@@ -102,9 +107,10 @@ public class BoardService implements IBoardService {
 	@Override
 	public ResponseEntity<?> inviteUser(long boardId, long[] ids) {
 		long id = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-		BoardEntity entity = boardRespository.findById(boardId).orElse(null);
+		BoardEntity entity = boardRespository.findById(boardId)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found board with id = " + id));
 		if (entity.getOwner().getId() != id)
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+			throw new ResourceForbiddenException("Dont't have permisson");
 		for (long userId : ids) {
 			String message = "You have been invited to " + entity.getName();
 			String thumbnail = entity.getOwner().getAvatar();

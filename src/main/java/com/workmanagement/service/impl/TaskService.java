@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.workmanagement.dto.TaskDTO;
 import com.workmanagement.entity.TaskEntity;
+import com.workmanagement.exception.ResourceNotFoundException;
 import com.workmanagement.mapper.TaskMapper;
 import com.workmanagement.respository.TaskRepository;
 import com.workmanagement.service.ITaskService;
@@ -20,7 +21,8 @@ public class TaskService implements ITaskService {
 
 	@Override
 	public TaskDTO getTaskById(long id) {
-		return mapper.toDTO(taskRepository.findById(id).orElse(null));
+		return mapper.toDTO(taskRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found task with id = " + id)));
 	}
 
 	@Override
@@ -30,7 +32,8 @@ public class TaskService implements ITaskService {
 
 	@Override
 	public TaskDTO updateTask(TaskDTO dto) {
-		TaskEntity entity = taskRepository.findById(dto.getId()).orElse(null);
+		TaskEntity entity = taskRepository.findById(dto.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Not found task with id = " + dto.getId()));
 		return mapper.toDTO(taskRepository.save(mapper.toEntity(dto, entity)));
 	}
 
@@ -38,5 +41,4 @@ public class TaskService implements ITaskService {
 	public void deleteTaskById(long id) {
 		taskRepository.deleteById(id);
 	}
-
 }

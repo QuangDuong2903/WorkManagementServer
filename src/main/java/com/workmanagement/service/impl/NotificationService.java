@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.workmanagement.dto.NotificationDTO;
 import com.workmanagement.entity.NotificationEntity;
+import com.workmanagement.exception.ResourceNotFoundException;
 import com.workmanagement.mapper.NotificationMapper;
 import com.workmanagement.respository.NotificationRepository;
 import com.workmanagement.respository.UserRespository;
@@ -19,22 +20,22 @@ import com.workmanagement.service.INotificationService;
 
 @Service
 public class NotificationService implements INotificationService {
-	
+
 	@Autowired
 	private NotificationRepository notificationRepository;
-	
+
 	@Autowired
 	private UserRespository userRespository;
-	
+
 	@Autowired
 	private NotificationMapper mapper;
 
 	@Override
 	public List<NotificationDTO> getAllNotificationsOfUser() {
-		long id = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-				.getId();
+		long id = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 		List<NotificationDTO> notifications = new ArrayList<>();
-		userRespository.findById(id).orElse(null).getNotitfications().forEach(notification -> notifications.add(mapper.toDTO(notification)));
+		userRespository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found user with id = " + id))
+				.getNotitfications().forEach(notification -> notifications.add(mapper.toDTO(notification)));
 		Collections.sort(notifications, new Comparator<NotificationDTO>() {
 			@Override
 			public int compare(NotificationDTO o1, NotificationDTO o2) {
@@ -46,9 +47,10 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public List<NotificationDTO> setRead(long[] ids) {
-		List<NotificationDTO> response= new ArrayList<>(); 
-		for(long id: ids) {
-			NotificationEntity entity = notificationRepository.findById(id).orElse(null);
+		List<NotificationDTO> response = new ArrayList<>();
+		for (long id : ids) {
+			NotificationEntity entity = notificationRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Not found notification with id = " + id));
 			entity.setIsRead(true);
 			response.add(mapper.toDTO(notificationRepository.save(entity)));
 		}
@@ -64,20 +66,23 @@ public class NotificationService implements INotificationService {
 		entity.setMessage(message);
 		entity.setThumbnail(thumbbail);
 		entity.setBoardId(boardId);
-		entity.setUser(userRespository.findById(userId).orElse(null));
+		entity.setUser(userRespository.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found user with id = " + userId)));
 		return mapper.toDTO(notificationRepository.save(entity));
 	}
 
 	@Override
 	public boolean isAccept(long id) {
-		return notificationRepository.findById(id).orElse(null).getIsAccept();
+		return notificationRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found notification with id = " + id))
+				.getIsAccept();
 	}
 
 	@Override
 	public void setIsAccept(long id) {
-		NotificationEntity entity =  notificationRepository.findById(id).orElse(null);
+		NotificationEntity entity = notificationRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found notification with id = " + id));
 		entity.setIsAccept(true);
 		notificationRepository.save(entity);
 	}
-
 }
