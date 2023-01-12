@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.workmanagement.dto.BoardDTO;
+import com.workmanagement.respository.BoardRepository;
 import com.workmanagement.service.impl.BoardService;
 
 @RestController
@@ -60,5 +61,13 @@ public class BoardAPI {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> deleteBroad(@PathVariable("id") long id) {
 		return boardService.delete(id);
+	}
+	
+	@Autowired
+	private BoardRepository boardRepository;
+	
+	@GetMapping(value = "/{id}/analyst/users")
+	public ResponseEntity<?> analyseByUsers(@PathVariable("id") long id) {
+		return ResponseEntity.ok().body(boardRepository.analyseBoardByUsers(id));
 	}
 }

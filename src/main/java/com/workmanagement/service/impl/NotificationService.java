@@ -2,7 +2,6 @@ package com.workmanagement.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +35,13 @@ public class NotificationService implements INotificationService {
 		List<NotificationDTO> notifications = new ArrayList<>();
 		userRespository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found user with id = " + id))
 				.getNotitfications().forEach(notification -> notifications.add(mapper.toDTO(notification)));
-		Collections.sort(notifications, new Comparator<NotificationDTO>() {
-			@Override
-			public int compare(NotificationDTO o1, NotificationDTO o2) {
-				return o2.getCreatedDate().compareTo(o1.getCreatedDate());
-			}
-		});
+//		Collections.sort(notifications, new Comparator<NotificationDTO>() {
+//			@Override
+//			public int compare(NotificationDTO o1, NotificationDTO o2) {
+//				return o2.getCreatedDate().compareTo(o1.getCreatedDate());
+//			}
+//		});
+		Collections.sort(notifications, (s1, s2) -> s2.getCreatedDate().compareTo(s1.getCreatedDate()));
 		return notifications;
 	}
 
