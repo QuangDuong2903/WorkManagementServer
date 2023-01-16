@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.workmanagement.api.response.UserTasksResponse;
 import com.workmanagement.dto.TaskDTO;
 import com.workmanagement.service.impl.TaskService;
 
@@ -41,5 +42,10 @@ public class TaskAPI {
 	public ResponseEntity<?> deleteTask(@PathVariable("id") long id) {
 		taskService.deleteTaskById(id);
 		return ResponseEntity.ok().body(null);
+	}
+	
+	@GetMapping
+	public ResponseEntity<UserTasksResponse> getAllTasksOfUser() {
+		return ResponseEntity.ok(taskService.getAllTasksOfUser());
 	}
 }
