@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.workmanagement.dto.NotificationDTO;
 import com.workmanagement.entity.NotificationEntity;
@@ -46,6 +47,7 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
+	@Transactional
 	public List<NotificationDTO> setRead(long[] ids) {
 		List<NotificationDTO> response = new ArrayList<>();
 		for (long id : ids) {
@@ -58,6 +60,7 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
+	@Transactional
 	public NotificationDTO createNotification(String message, String thumbbail, long boardId, long userId, int type) {
 		NotificationEntity entity = new NotificationEntity();
 		entity.setIsAccept(false);
@@ -79,6 +82,7 @@ public class NotificationService implements INotificationService {
 	}
 
 	@Override
+	@Transactional
 	public void setIsAccept(long id) {
 		NotificationEntity entity = notificationRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found notification with id = " + id));

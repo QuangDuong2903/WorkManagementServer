@@ -16,13 +16,13 @@ import com.workmanagement.dto.TaskDTO;
 import com.workmanagement.service.impl.TaskService;
 
 @RestController
-@RequestMapping(value = "task")
+@RequestMapping("task")
 public class TaskAPI {
 
 	@Autowired
 	private TaskService taskService;
 
-	@GetMapping(value = "/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getTaskById(@PathVariable("id") long id) {
 		return ResponseEntity.ok().body(taskService.getTaskById(id));
 	}
@@ -32,13 +32,13 @@ public class TaskAPI {
 		return ResponseEntity.ok().body(taskService.createTask(dto));
 	}
 
-	@PutMapping(value = "/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> createTask(@RequestBody TaskDTO dto, @PathVariable("id") long id) {
 		dto.setId(id);
 		return ResponseEntity.ok().body(taskService.updateTask(dto));
 	}
 
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteTask(@PathVariable("id") long id) {
 		taskService.deleteTaskById(id);
 		return ResponseEntity.ok().body(null);

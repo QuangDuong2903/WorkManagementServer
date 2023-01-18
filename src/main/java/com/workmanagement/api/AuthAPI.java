@@ -13,7 +13,7 @@ import com.workmanagement.service.impl.UserService;
 import com.workmanagement.utils.JwtProvider;
 
 @RestController
-@RequestMapping(value = "/auth")
+@RequestMapping("/auth")
 public class AuthAPI {
 
 	@Autowired
@@ -22,7 +22,7 @@ public class AuthAPI {
 	@Autowired
 	private JwtProvider jwtProvider;
 
-	@PostMapping(value = "/google")
+	@PostMapping("/google")
 	public ResponseEntity<?> loginByGoogle(@RequestBody UserDTO dto) {
 		UserDTO user = userService.save(dto);
 		return ResponseEntity.ok()

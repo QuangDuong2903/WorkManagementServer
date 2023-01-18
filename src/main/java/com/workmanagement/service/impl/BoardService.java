@@ -13,12 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.workmanagement.constant.SystemConstant;
 import com.workmanagement.dto.BoardDTO;
 import com.workmanagement.dto.NotificationDTO;
+import com.workmanagement.dto.TaskGroupWithTaskDTO;
 import com.workmanagement.dto.UserDTO;
 import com.workmanagement.entity.BoardEntity;
+import com.workmanagement.entity.TaskGroupEntity;
 import com.workmanagement.entity.UserEntity;
 import com.workmanagement.exception.ResourceForbiddenException;
 import com.workmanagement.exception.ResourceNotFoundException;
 import com.workmanagement.mapper.BoardMapper;
+import com.workmanagement.mapper.TaskGroupMapper;
 import com.workmanagement.mapper.UserMapper;
 import com.workmanagement.respository.BoardRepository;
 import com.workmanagement.respository.UserRespository;
@@ -39,6 +42,9 @@ public class BoardService implements IBoardService {
 
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private TaskGroupMapper taskGroupMapper;
 
 	@Autowired
 	private NotificationService notificationService;
@@ -74,14 +80,12 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	@Transactional
 	public BoardDTO getBoardById(long id) {
 		return boardMapper.toDTO(boardRespository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found board with id = " + id)));
 	}
 
 	@Override
-	@Transactional
 	public List<BoardDTO> getAllBoardOfUser() {
 		long id = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 		List<BoardDTO> boards = new ArrayList<>();
@@ -122,6 +126,7 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
+	@Transactional
 	public BoardDTO addUser(long id, long notiId) {
 		long userId = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getId();
@@ -139,5 +144,15 @@ public class BoardService implements IBoardService {
 						user.getAvatar(), -1, entity.getOwner().getId(), SystemConstant.MESSAGE_NOTIFICATION));
 		entity.getUsers().add(user);
 		return boardMapper.toDTO(boardRespository.save(entity));
+	}
+
+	@Override
+	public List<TaskGroupWithTaskDTO> getAllGroupWithTaskOfBoard(long id) {
+		List<TaskGroupWithTaskDTO> groups = new ArrayList<>();
+		BoardEntity boardEntity = boardRespository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found board with id = " + id));
+		for (TaskGroupEntity taskGroupEntity : boardEntity.getGroups())
+			groups.add(taskGroupMapper.toDetailDTO(taskGroupEntity));
+		return groups;
 	}
 }

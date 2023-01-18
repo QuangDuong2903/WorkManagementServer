@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.workmanagement.service.impl.UserService;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping("/user")
 public class UserAPI {
 	
 	@Autowired

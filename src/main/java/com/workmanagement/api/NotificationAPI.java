@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.workmanagement.service.impl.NotificationService;
 
 @RestController
-@RequestMapping(value = "/notification")
+@RequestMapping("/notification")
 public class NotificationAPI {
 
 	@Autowired

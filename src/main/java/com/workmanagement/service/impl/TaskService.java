@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.workmanagement.api.response.UserTasksResponse;
 import com.workmanagement.dto.TaskDTO;
@@ -48,11 +49,13 @@ public class TaskService implements ITaskService {
 	}
 
 	@Override
+	@Transactional
 	public TaskDTO createTask(TaskDTO dto) {
 		return mapper.toDTO(taskRepository.save(mapper.toEntity(dto)));
 	}
 
 	@Override
+	@Transactional
 	public TaskDTO updateTask(TaskDTO dto) {
 		TaskEntity entity = taskRepository.findById(dto.getId())
 				.orElseThrow(() -> new ResourceNotFoundException("Not found task with id = " + dto.getId()));
@@ -60,6 +63,7 @@ public class TaskService implements ITaskService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteTaskById(long id) {
 		taskRepository.deleteById(id);
 	}

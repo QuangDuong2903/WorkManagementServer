@@ -16,13 +16,13 @@ import com.workmanagement.respository.BoardRepository;
 import com.workmanagement.service.impl.BoardService;
 
 @RestController
-@RequestMapping(value = "/board")
+@RequestMapping("/board")
 public class BoardAPI {
 
 	@Autowired
 	private BoardService boardService;
 
-	@GetMapping(value = "/{id}/users")
+	@GetMapping("/{id}/users")
 	public ResponseEntity<?> getAllUserOfBoard(@PathVariable("id") long id) {
 		return ResponseEntity.ok().body(boardService.getAllUserOfBoard(id));
 	}
@@ -32,7 +32,7 @@ public class BoardAPI {
 		return ResponseEntity.ok().body(boardService.getAllBoardOfUser());
 	}
 
-	@GetMapping(value = "/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getBoardById(@PathVariable("id") long id) {
 		return ResponseEntity.ok().body(boardService.getBoardById(id));
 	}
@@ -42,7 +42,7 @@ public class BoardAPI {
 		return ResponseEntity.ok().body(boardService.save(dto));
 	}
 
-	@PutMapping(value = "/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> updateBoard(@RequestBody BoardDTO dto, @PathVariable("id") long id) {
 		dto.setId(id);
 		return ResponseEntity.ok().body(boardService.update(dto));
@@ -58,7 +58,7 @@ public class BoardAPI {
 		return ResponseEntity.ok().body(boardService.addUser(id, notiId));
 	}
 
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteBroad(@PathVariable("id") long id) {
 		return boardService.delete(id);
 	}
@@ -66,8 +66,13 @@ public class BoardAPI {
 	@Autowired
 	private BoardRepository boardRepository;
 	
-	@GetMapping(value = "/{id}/analyst/users")
+	@GetMapping("/{id}/analyst/users")
 	public ResponseEntity<?> analyseByUsers(@PathVariable("id") long id) {
 		return ResponseEntity.ok().body(boardRepository.analyseBoardByUsers(id));
+	}
+	
+	@GetMapping("/{id}/groups")
+	public ResponseEntity<?> getAllGroupWithTaskInBoard(@PathVariable("id") long id) {
+		return ResponseEntity.ok(boardService.getAllGroupWithTaskOfBoard(id));
 	}
 }

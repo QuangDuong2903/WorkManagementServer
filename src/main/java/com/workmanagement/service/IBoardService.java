@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.workmanagement.dto.BoardDTO;
+import com.workmanagement.dto.TaskGroupWithTaskDTO;
 import com.workmanagement.dto.UserDTO;
 
 public interface IBoardService {
@@ -16,4 +17,5 @@ public interface IBoardService {
 	BoardDTO getBoardById(long id);
 	List<BoardDTO> getAllBoardOfUser();
 	List<UserDTO> getAllUserOfBoard(long id);
+	List<TaskGroupWithTaskDTO> getAllGroupWithTaskOfBoard(long id);
 }
