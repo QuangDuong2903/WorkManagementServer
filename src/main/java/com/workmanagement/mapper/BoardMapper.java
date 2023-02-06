@@ -11,7 +11,7 @@ import com.workmanagement.dto.BoardDTO;
 import com.workmanagement.entity.BoardEntity;
 import com.workmanagement.entity.TaskGroupEntity;
 import com.workmanagement.entity.UserEntity;
-import com.workmanagement.respository.UserRespository;
+import com.workmanagement.repository.UserRespository;
 import com.workmanagement.security.CustomUserDetail;
 
 @Component

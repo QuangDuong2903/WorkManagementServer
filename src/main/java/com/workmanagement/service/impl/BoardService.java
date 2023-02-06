@@ -23,8 +23,8 @@ import com.workmanagement.exception.ResourceNotFoundException;
 import com.workmanagement.mapper.BoardMapper;
 import com.workmanagement.mapper.TaskGroupMapper;
 import com.workmanagement.mapper.UserMapper;
-import com.workmanagement.respository.BoardRepository;
-import com.workmanagement.respository.UserRespository;
+import com.workmanagement.repository.BoardRepository;
+import com.workmanagement.repository.UserRespository;
 import com.workmanagement.security.CustomUserDetail;
 import com.workmanagement.service.IBoardService;
 

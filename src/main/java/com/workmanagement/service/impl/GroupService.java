@@ -8,7 +8,7 @@ import com.workmanagement.dto.TaskGroupDTO;
 import com.workmanagement.entity.TaskGroupEntity;
 import com.workmanagement.exception.ResourceNotFoundException;
 import com.workmanagement.mapper.TaskGroupMapper;
-import com.workmanagement.respository.TaskGroupRepository;
+import com.workmanagement.repository.TaskGroupRepository;
 import com.workmanagement.service.IGroupService;
 
 @Service

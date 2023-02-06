@@ -12,7 +12,7 @@ import com.workmanagement.constant.SystemConstant;
 import com.workmanagement.dto.UserDTO;
 import com.workmanagement.entity.UserEntity;
 import com.workmanagement.mapper.UserMapper;
-import com.workmanagement.respository.UserRespository;
+import com.workmanagement.repository.UserRespository;
 import com.workmanagement.service.IUserService;
 
 @Service

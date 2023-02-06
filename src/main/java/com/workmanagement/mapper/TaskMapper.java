@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import com.workmanagement.constant.SystemConstant;
 import com.workmanagement.dto.TaskDTO;
 import com.workmanagement.entity.TaskEntity;
-import com.workmanagement.respository.TaskGroupRepository;
-import com.workmanagement.respository.UserRespository;
+import com.workmanagement.repository.TaskGroupRepository;
+import com.workmanagement.repository.UserRespository;
 
 @Component
 public class TaskMapper {

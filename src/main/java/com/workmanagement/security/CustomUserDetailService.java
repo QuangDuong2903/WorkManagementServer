@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.workmanagement.constant.SystemConstant;
 import com.workmanagement.entity.UserEntity;
-import com.workmanagement.respository.UserRespository;
+import com.workmanagement.repository.UserRespository;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {

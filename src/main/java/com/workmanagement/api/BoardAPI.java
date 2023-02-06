@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.workmanagement.dto.BoardDTO;
-import com.workmanagement.respository.BoardRepository;
+import com.workmanagement.repository.BoardRepository;
 import com.workmanagement.service.impl.BoardService;
 
 @RestController

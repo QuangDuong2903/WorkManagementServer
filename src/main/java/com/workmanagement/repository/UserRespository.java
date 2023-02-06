@@ -1,4 +1,4 @@
-package com.workmanagement.respository;
+package com.workmanagement.repository;
 
 import java.util.List;
 

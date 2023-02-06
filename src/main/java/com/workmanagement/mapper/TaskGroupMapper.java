@@ -12,7 +12,7 @@ import com.workmanagement.dto.TaskGroupDTO;
 import com.workmanagement.entity.BoardEntity;
 import com.workmanagement.entity.TaskEntity;
 import com.workmanagement.entity.TaskGroupEntity;
-import com.workmanagement.respository.BoardRepository;
+import com.workmanagement.repository.BoardRepository;
 
 @Component
 public class TaskGroupMapper {

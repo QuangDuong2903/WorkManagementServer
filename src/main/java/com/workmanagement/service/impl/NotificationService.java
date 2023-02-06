@@ -13,8 +13,8 @@ import com.workmanagement.dto.NotificationDTO;
 import com.workmanagement.entity.NotificationEntity;
 import com.workmanagement.exception.ResourceNotFoundException;
 import com.workmanagement.mapper.NotificationMapper;
-import com.workmanagement.respository.NotificationRepository;
-import com.workmanagement.respository.UserRespository;
+import com.workmanagement.repository.NotificationRepository;
+import com.workmanagement.repository.UserRespository;
 import com.workmanagement.security.CustomUserDetail;
 import com.workmanagement.service.INotificationService;
 
