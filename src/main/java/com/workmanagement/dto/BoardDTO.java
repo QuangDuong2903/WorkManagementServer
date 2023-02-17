@@ -1,6 +1,5 @@
 package com.workmanagement.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDTO extends BaseDTO {
@@ -8,8 +7,8 @@ public class BoardDTO extends BaseDTO {
 	private String name;
 	private String description;
 	private long owner;
-	private List<Long> users = new ArrayList<>();
-	private List<Long> groups = new ArrayList<>();
+	private List<Long> users;
+	private List<Long> groups;
 	
 	public String getName() {
 		return name;

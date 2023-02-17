@@ -41,12 +41,14 @@ public class BoardMapper {
 			entity.setName(dto.getName());
 		if (dto.getDescription() != null)
 			entity.setDescription(dto.getDescription());
-//		if (dto.getUsers().size() > 0) {
-//			List<UserEntity> users = new ArrayList<>();
-//			for (long id : dto.getUsers())
-//				users.add(userRespository.findById(id).orElse(null));
-//			entity.setUsers(users);
-//		}
+		if (dto.getUsers() != null) {
+			List<UserEntity> users = new ArrayList<>();
+			for (long id : dto.getUsers())
+				users.add(userRespository.findById(id).orElse(null));
+			entity.setUsers(users);
+		} else {
+			System.out.println("NULL");
+		}
 		return entity;
 	}
 

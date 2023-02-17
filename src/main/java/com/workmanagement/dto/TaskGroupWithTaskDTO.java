@@ -1,12 +1,11 @@
 package com.workmanagement.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskGroupWithTaskDTO extends BaseDTO {
 	private String name;
 	private String color;
-	private List<TaskDTO> tasks = new ArrayList<>();
+	private List<TaskDTO> tasks;
 	
 	public String getName() {
 		return name;

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +19,9 @@ import com.workmanagement.mapper.TaskDetailMapper;
 import com.workmanagement.mapper.TaskMapper;
 import com.workmanagement.repository.TaskRepository;
 import com.workmanagement.repository.UserRespository;
-import com.workmanagement.security.CustomUserDetail;
 import com.workmanagement.service.ITaskService;
 import com.workmanagement.utils.DateTimeUtils;
+import com.workmanagement.utils.SecurityUtils;
 
 @Service
 public class TaskService implements ITaskService {
@@ -41,6 +40,9 @@ public class TaskService implements ITaskService {
 
 	@Autowired
 	private DateTimeUtils dateTimeUtils;
+	
+	@Autowired
+	private SecurityUtils securityUtils;
 
 	@Override
 	public TaskDTO getTaskById(long id) {
@@ -71,7 +73,7 @@ public class TaskService implements ITaskService {
 	@Override
 	public UserTasksResponse getAllTasksOfUser() {
 		List<TaskDetailDTO> tasks = new ArrayList<TaskDetailDTO>();
-		long id = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+		long id = securityUtils.getUserId();
 		UserEntity user = userRespository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found user with id = " + id));
 		user.getTasks().forEach(task -> tasks.add(taskDetailMapper.toDTO(task)));
