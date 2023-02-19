@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mysql:8.0
+    ports:
+      - 3307:3306
+    networks:
+      - spring-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: workmanagement
+      MYSQL_ROOT_PASSWORD: 292003
+      MYSQL_USER: quangduong
+      MYSQL_PASSWORD: 292003
+    volumes:
+      - mysql-data:/var/lib/mysql
+  backend:
+    build: .
+    ports:
+      - 8081:8081
+    depends_on:
+      - db
+    links: 
+      - db
+    networks:
+      - spring-mysql
+    restart: always
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: workmanagement
+      DB_USER: quangduong
+      DB_PASSWORD: 292003
+volumes:
+   mysql-data:
+networks:
+   spring-mysql:
