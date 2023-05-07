@@ -14,7 +14,8 @@ The default endpoint is http://localhost:8081/api
 You can access http://localhost:8081/api/swagger-ui.html#/ for API documentation
 
 # Built With
-* Java 11
+* JDK 11
+* MySql 8.0.31
 * Maven 3.6.0
 * Spring Boot 2.5.14
 * Spring Data JPA
